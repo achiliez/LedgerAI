@@ -7,14 +7,15 @@ import json
 import logging
 from datetime import date
 
-from openai import AsyncOpenAI
+from google import genai
+from google.genai import types
 
 from config import settings
 from models.schemas import LLMResponse, TransactionCreate, TransactionType
 
 logger = logging.getLogger(__name__)
 
-client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 # ── System Prompt ──────────────────────────────────────────────
 SYSTEM_PROMPT = """You are a financial transaction parser for LedgerAI.
@@ -66,7 +67,7 @@ User: "hello"
 
 async def parse_transaction(message: str, today: date | None = None) -> LLMResponse:
     """
-    Send a user message to GPT-4o and parse the response into a validated schema.
+    Send a user message to Gemini and parse the response into a validated schema.
 
     Args:
         message: The (PII-masked) user message.
@@ -82,18 +83,17 @@ async def parse_transaction(message: str, today: date | None = None) -> LLMRespo
     prompt = SYSTEM_PROMPT.replace("TODAYS_DATE", today.isoformat())
 
     try:
-        response = await client.chat.completions.create(
-            model=settings.OPENAI_MODEL,
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": message},
-            ],
-            temperature=0.1,  # Low temperature for consistent parsing
-            max_tokens=300,
-            response_format={"type": "json_object"},
+        response = await client.aio.models.generate_content(
+            model=settings.GEMINI_MODEL,
+            contents=message,
+            config=types.GenerateContentConfig(
+                system_instruction=prompt,
+                temperature=0.1,  # Low temperature for consistent parsing
+                response_mime_type="application/json",
+            )
         )
 
-        raw = response.choices[0].message.content
+        raw = response.text
         if not raw:
             return LLMResponse(
                 type=TransactionType.NOT_TRANSACTION,

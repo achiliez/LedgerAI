@@ -12,12 +12,12 @@ class Settings(BaseSettings):
 
     # ── Required ──────────────────────────────────────────────
     TELEGRAM_BOT_TOKEN: str
-    OPENAI_API_KEY: str
+    GEMINI_API_KEY: str
     DATABASE_URL: str  # async: postgresql+asyncpg://...
     DATABASE_URL_SYNC: str = ""  # sync: postgresql+psycopg2://...
 
     # ── Optional ──────────────────────────────────────────────
-    OPENAI_MODEL: str = "gpt-4o"
+    GEMINI_MODEL: str = "gemini-2.5-flash"
     REPORT_HOUR: int = Field(default=21, ge=0, le=23)
     REPORT_MINUTE: int = Field(default=0, ge=0, le=59)
     TIMEZONE: str = "Asia/Kolkata"
