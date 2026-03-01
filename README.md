@@ -58,8 +58,8 @@ cp .env.example .env
 
 Edit `.env` and fill in:
 ```env
-TELEGRAM_BOT_TOKEN=your-telegram-bot-token
-OPENAI_API_KEY=sk-your-openai-key
+TELEGRAM_BOT_TOKEN=your-token-here
+GEMINI_API_KEY=your-gemini-key-compose up --build
 ```
 
 ### Step 4 — Run!
@@ -115,14 +115,13 @@ Automated at 9:00 PM IST (configurable). Includes:
 
 ## 🔧 Configuration
 
-All settings via `.env` file:
-
+All settings via `.env`### Configuration
 | Variable | Default | Description |
-|----------|---------|-------------|
+|---|---|---|
 | `TELEGRAM_BOT_TOKEN` | — | **Required.** From @BotFather |
-| `OPENAI_API_KEY` | — | **Required.** From OpenAI |
-| `DATABASE_URL` | auto (Docker) | PostgreSQL connection string |
-| `OPENAI_MODEL` | `gpt-4o` | Model for parsing |
+| `GEMINI_API_KEY` | — | **Required.** From Google AI Studio |
+| `DATABASE_URL` | — | **Required.** Async PG url |
+| `GEMINI_MODEL` | `gemini-2.5-flash` | Model for parsing |
 | `REPORT_HOUR` | `21` | Daily report hour (24h) |
 | `REPORT_MINUTE` | `0` | Daily report minute |
 | `TIMEZONE` | `Asia/Kolkata` | IANA timezone |

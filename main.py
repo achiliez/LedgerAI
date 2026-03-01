@@ -53,10 +53,8 @@ def main():
 
     logger.info("🚀 Bot is starting... (polling mode)")
     logger.info(f"💱 Currency: {settings.CURRENCY_SYMBOL}")
-    logger.info(f"🧠 LLM Model: {settings.OPENAI_MODEL}")
-    logger.info(
-        f"📊 Daily report at: {settings.REPORT_HOUR:02d}:{settings.REPORT_MINUTE:02d} {settings.TIMEZONE}"
-    )
+    logger.info(f"🧠 LLM Model: {settings.GEMINI_MODEL}")
+    logger.info(f"⏰ Daily Report: {settings.REPORT_HOUR}:{settings.REPORT_MINUTE:02d} {settings.TIMEZONE}")
     logger.info("Press Ctrl+C to stop.\n")
 
     # Start polling (blocks until Ctrl+C)
